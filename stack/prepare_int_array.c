@@ -18,7 +18,7 @@ static int		ft_count_words(int ac, char **av)
 	int	j;
 	int	count_words;
 
-	i = 0;
+	i = (!ft_strcmp("-v", av[1])) ? 1 : 0;
 	count_words = 0;
 	while (++i < ac)
 	{
@@ -75,10 +75,11 @@ int				*prepare_array_of_numbers(int ac, char **av)
 	int	i;
 
 	count_words = ft_count_words(ac, av);
-	result = (int *)malloc((count_words + 1) * sizeof(int));
+	if (!(result = (int *)malloc((count_words + 1) * sizeof(int))))
+		exit(1);
 	result[0] = count_words;
 	count_words = 1;
-	i = 1;
+	i = (!ft_strcmp("-v", av[1])) ? 2 : 1;
 	while (i < ac)
 	{
 		ft_check_and_fill_array(av[i], result, &count_words);

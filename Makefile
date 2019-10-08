@@ -16,7 +16,7 @@ NAME_2 = push_swap
 
 SRCS_1 = ./commands/push.c ./commands/reverse_rotate.c ./commands/rotate.c\
 		./commands/swap.c ./stack/validator.c ./stack/prepare_int_array.c\
-		./stack/prepare_stack.c ./main.c
+		./stack/prepare_stack.c ./checker_main.c
 
 SRCS_2 = ./commands/push.c ./commands/reverse_rotate.c ./commands/rotate.c\
 		./commands/swap.c ./stack/validator.c ./stack/prepare_int_array.c\
@@ -24,21 +24,23 @@ SRCS_2 = ./commands/push.c ./commands/reverse_rotate.c ./commands/rotate.c\
 
 OBJ_1 =  ./commands/push.o ./commands/reverse_rotate.o ./commands/rotate.o\
 		./commands/swap.o ./stack/validator.o ./stack/prepare_int_array.o\
-		./stack/prepare_stack.o ./main.o
+		./stack/prepare_stack.o ./checker_main.o
 
 HDR = ./libft/includes/
 
 FLAG = -Wall -Wextra -Werror
+
+#MINILIB = -L ./minilibx/ -lmlx -framework OpenGL -framework AppKit
+
 
 all: $(NAME_1)
 
 $(NAME_1): $(OBJ_1)
 	make -C libft
 	gcc -o $(NAME_1) $(OBJ_1) -L ./libft -lft
-
 $(OBJ_1): %.o: %.c ./ft_swap_header.h
 	
-	gcc $(FLAG) -c -I $(HDR) -I . $< -o $@
+	gcc -g $(FLAG) -c -I $(HDR) -I . $< -o $@
 
 clean:
 	make -C libft clean

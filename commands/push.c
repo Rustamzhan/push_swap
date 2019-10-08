@@ -29,7 +29,7 @@ void	push_a(t_stack **a, t_stack **b)
 		(*b)->next = *a;
 		(*a)->prev = *b;
 		*a = *b;
-	}	
+	}
 	*b = tmp;
 }
 

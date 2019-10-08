@@ -70,18 +70,18 @@ int	ft_check_duplicates(int *result)
 	return (1);
 }
 
-int	ft_check_command(char *str)
-{
-	static char	*check[] = { "sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr",
-							"rra", "rrb", "rrr" };
-	int			i;
+// int	ft_check_command(char *str)
+// {
+// 	static char	*check[] = { "sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr",
+// 							"rra", "rrb", "rrr" };
+// 	int			i;
 
-	i = 0;
-	while (i < 11)
-	{
-		if (ft_strcmp(str, check[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (i < 11)
+// 	{
+// 		if (ft_strcmp(str, check[i]) == 0)
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }

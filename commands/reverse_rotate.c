@@ -30,13 +30,15 @@ static void	reverse_rotate_one_stack(t_stack **current)
 
 void		reverse_rotate_stacks(t_stack **a, t_stack **b)
 {
-	if (*a && *b)
+	if (a && b)
 	{
-		reverse_rotate_one_stack(a);
-		reverse_rotate_one_stack(b);
+		if (*a)
+			reverse_rotate_one_stack(a);
+		if (*b)
+			reverse_rotate_one_stack(b);
 	}
-	else if (*a == NULL)
+	else if (a == NULL && *b)
 		reverse_rotate_one_stack(b);
-	else if (*b == NULL)
+	else if (b == NULL && *a)
 		reverse_rotate_one_stack(a);
 }

@@ -28,13 +28,15 @@ static void	swap_one_stack(t_stack **current)
 
 void		swap_stacks(t_stack **a, t_stack **b)
 {
-	if (*a && *b)
+	if (a && b)
 	{
-		swap_one_stack(a);
-		swap_one_stack(b);
+		if (*a)
+			swap_one_stack(a);
+		if (*b)
+			swap_one_stack(b);
 	}
-	else if (*a == NULL)
+	else if (a == NULL && *b)
 		swap_one_stack(b);
-	else if (*b == NULL)
+	else if (b == NULL && *a)
 		swap_one_stack(a);
 }

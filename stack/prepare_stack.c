@@ -20,7 +20,8 @@ static void	create_stack(t_stack *stack, int *numbers)
 	i = 1;
 	while (++i < numbers[0] + 1)
 	{
-		tmp = (t_stack *)malloc(sizeof(t_stack));
+		if (!(tmp = (t_stack *)malloc(sizeof(t_stack))))
+			exit(1);
 		tmp->num = numbers[i];
 		tmp->next = NULL;
 		tmp->prev = stack;
@@ -40,7 +41,8 @@ t_stack		*prepare_stack(int ac, char **av)
 		free(numbers);
 		return (NULL);
 	}
-	head = (t_stack *)malloc(sizeof(t_stack));
+	if (!(head = (t_stack *)malloc(sizeof(t_stack))))
+		exit(1);
 	head->num = numbers[1];
 	head->next = NULL;
 	head->prev = NULL;
