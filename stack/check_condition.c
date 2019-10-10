@@ -48,7 +48,6 @@ static int	check_stack(t_stack *stack, t_stack *a, int min)
 int			is_sorted_stack(t_container *a, t_container *b)
 {
 	t_stack	*stack;
-	t_stack	*tail;
 	int		min;
 
 	if (b && b->height)

@@ -101,7 +101,6 @@ int					main(int ac, char **av)
 {
 	t_container	*a;
 	t_container	*b;
-	char		*line;
 
 	if (!(b = (t_container*)malloc(sizeof(t_container))) ||
 		!(a = (t_container*)malloc(sizeof(t_container))))
