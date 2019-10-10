@@ -30,7 +30,7 @@ static void	create_stack(t_stack *stack, int *numbers)
 	}
 }
 
-t_stack		*prepare_stack(int ac, char **av)
+void		prepare_stack(t_container *a, int ac, char **av)
 {
 	int		*numbers;
 	t_stack	*head;
@@ -39,14 +39,15 @@ t_stack		*prepare_stack(int ac, char **av)
 	if (numbers[0] == 0)
 	{
 		free(numbers);
-		return (NULL);
+		return ;
 	}
+	a->height = numbers[0];
 	if (!(head = (t_stack *)malloc(sizeof(t_stack))))
 		exit(1);
 	head->num = numbers[1];
 	head->next = NULL;
 	head->prev = NULL;
+	a->stack = head;
 	create_stack(head, numbers);
 	free(numbers);
-	return (head);
 }

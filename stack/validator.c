@@ -12,7 +12,7 @@
 
 #include "ft_swap_header.h"
 
-int	ft_isnumber(char *str)
+int		ft_isnumber(char *str)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ int	ft_isnumber(char *str)
 	return (1);
 }
 
-int	ft_isint(char *str)
+int		ft_isint(char *str)
 {
 	int	len;
 	int	i;
@@ -52,7 +52,7 @@ int	ft_isint(char *str)
 	return (1);
 }
 
-int	ft_check_duplicates(int *result)
+int		ft_check_duplicates(int *result)
 {
 	int	i;
 	int	j;
@@ -70,18 +70,22 @@ int	ft_check_duplicates(int *result)
 	return (1);
 }
 
-// int	ft_check_command(char *str)
-// {
-// 	static char	*check[] = { "sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr",
-// 							"rra", "rrb", "rrr" };
-// 	int			i;
+void	ft_free_stacks(t_container *a, t_container *b)
+{
+	t_stack *tmp;
 
-// 	i = 0;
-// 	while (i < 11)
-// 	{
-// 		if (ft_strcmp(str, check[i]) == 0)
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
+	while (a->stack)
+	{
+		tmp = a->stack->next;
+		free(a->stack);
+		a->stack = tmp;
+	}
+	while (b->stack)
+	{
+		tmp = b->stack->next;
+		free(b->stack);
+		b->stack = tmp;
+	}
+	free(a);
+	free(b);
+}

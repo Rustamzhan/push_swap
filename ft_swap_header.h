@@ -14,7 +14,6 @@
 # define FT_SWAP_HEADER_H
 
 # include "libft.h"
-# include <stdio.h>
 # include <time.h>
 # include <mlx.h>
 
@@ -25,10 +24,27 @@ typedef struct			s_stack
 	struct s_stack		*next;
 }						t_stack;
 
+typedef struct			s_container
+{
+	t_stack				*stack;
+	int					height;
+}						t_container;
+
 typedef struct			s_commands
 {
-	char				*command;
-	struct s_commands	*next;
+	int					check;
+	int					rb;
+	int					ra;
+	int					rr;
+	int					summ;
+	int					position_in_a;
+	int					trr;
+	int					tra;
+	int					trb;
+	int					summ_tr;
+	char				*str_both;
+	char				*str_a;
+	char				*str_b;
 }						t_commands;
 
 int						ft_check_duplicates(int *result);
@@ -36,11 +52,18 @@ int						ft_isint(char *str);
 int						ft_isnumber(char *str);
 int						ft_check_command(char *str);
 int						*prepare_array_of_numbers(int ac, char **av);
-t_stack					*prepare_stack(int ac, char **av);
+int						is_sorted_stack(t_container *a, t_container *b);
+int						check_position(t_stack *a);
+int						find_position(t_stack *stack, int num);
+void					print_rotates(t_container *a);
+void					prepare_stack(t_container *a, int ac, char **av);
 void					swap_stacks(t_stack **a, t_stack **b);
-void					push_a(t_stack **a, t_stack **b);
-void					push_b(t_stack **a, t_stack **b);
+void					push_a(t_container *a, t_container *b);
+void					push_b(t_container *a, t_container *b);
 void					rotate_stacks(t_stack **a, t_stack **b);
 void					reverse_rotate_stacks(t_stack **a, t_stack **b);
+void					ft_free_stacks(t_container *a, t_container *b);
+t_commands				fill_score_table(t_commands table, int pos_b,
+										int height_a, int height_b);
 
 #endif

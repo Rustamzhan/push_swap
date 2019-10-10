@@ -24,9 +24,11 @@ static t_list	*get_current_list(int fd, t_list **head)
 		current = current->next;
 	}
 	current = ft_lstnew(NULL, 0);
-	ft_lstadd(head, current);
-	current = *head;
-	(*head)->content_size = fd;
+	if (*head)
+		ft_lstadd(head, current);
+	else
+		*head = current;
+	current->content_size = fd;
 	return (current);
 }
 
@@ -51,7 +53,7 @@ static int		save_line(char **line, char *buf, t_list *current)
 	str[i] = '\0';
 	*line = ft_strjoin_free(*line, str);
 	free(str);
-	if (buf[i++] != '\0')
+	if (buf[i++] != '\0' && buf[i] != '\0')
 	{
 		str = ft_strjoin("", buf + i);
 		if (current->content)
@@ -69,6 +71,9 @@ static int		save_line(char **line, char *buf, t_list *current)
 
 int				ft_free(t_list *head, t_list **lst)
 {
+	t_list	*tmp;
+
+	tmp = head;
 	while (head != *lst && head->next != *lst)
 		head = head->next;
 	if (head == *lst)
@@ -76,6 +81,8 @@ int				ft_free(t_list *head, t_list **lst)
 	else
 		head->next = (*lst)->next;
 	free(*lst);
+	*lst = NULL;
+	head = tmp;
 	return (0);
 }
 
@@ -101,8 +108,6 @@ int				get_next_line(const int fd, char **line)
 			return (save_line(line, buf, current));
 		*line = ft_strjoin_free(*line, buf);
 	}
-	if (ft_strlen(*line))
-		return (1);
-	else
-		return (0);
+	current->content ? 0 : ft_free(head, &current);
+	return (ft_strlen(*line) ? 1 : 0);
 }

@@ -12,44 +12,50 @@
 
 #include "ft_swap_header.h"
 
-void	push_a(t_stack **a, t_stack **b)
+void	push_a(t_container *a, t_container *b)
 {
 	t_stack	*tmp;
 
-	if (*b == NULL)
+	if (b->stack == NULL)
 		return ;
-	tmp = (*b)->next;
-	if (!(*a))
+	tmp = b->stack->next;
+	if (!(a->stack))
 	{
-		*a = *b;
-		(*a)->next = NULL;
+		a->stack = b->stack;
+		a->stack->next = NULL;
+		a->height = 1;
 	}
 	else
 	{
-		(*b)->next = *a;
-		(*a)->prev = *b;
-		*a = *b;
+		b->stack->next = a->stack;
+		a->stack->prev = b->stack;
+		a->stack = b->stack;
+		a->height++;
 	}
-	*b = tmp;
+	b->stack = tmp;
+	b->height--;
 }
 
-void	push_b(t_stack **a, t_stack **b)
+void	push_b(t_container *a, t_container *b)
 {
 	t_stack	*tmp;
 
-	if (*a == NULL)
+	if (a->stack == NULL)
 		return ;
-	tmp = (*a)->next;
-	if (!(*b))
+	tmp = a->stack->next;
+	if (!(b->stack))
 	{
-		*b = *a;
-		(*b)->next = NULL;
+		b->stack = a->stack;
+		b->stack->next = NULL;
+		b->height = 1;
 	}
 	else
 	{
-		(*a)->next = *b;
-		(*b)->prev = *a;
-		*b = *a;
+		a->stack->next = b->stack;
+		b->stack->prev = a->stack;
+		b->stack = a->stack;
+		b->height++;
 	}
-	*a = tmp;
+	a->stack = tmp;
+	a->height--;
 }
