@@ -21,24 +21,58 @@ static void		print_symbols(char *str, int len)
 		write(1, str, 1);
 }
 
-static void		print_string(t_stack *a, t_stack *b, int height)
+static void		print_string(t_stack *a, t_stack *b, int height, int color)
 {
 	int		i;
 
 	i = (a) ? a->rank : 0;
-	write(1, "\x1b[32m", 6);
+	(color) ? write(1, "\x1b[32m", 6) : 0;
 	print_symbols(" ", 5 + height - i);
 	print_symbols("_", i);
 	print_symbols("_", i);
 	print_symbols(" ", 5 + height - i);
-	write(1, "\x1b[0m", 5);
+	(color) ? write(1, "\x1b[0m", 5) : 0;
 	i = (b) ? b->rank : 0;
-	write(1, "\x1b[31m", 6);
+	(color) ? write(1, "\x1b[31m", 6) : 0;
 	print_symbols(" ", 5 + height - i);
 	print_symbols("_", i);
 	print_symbols("_", i);
-	write(1, "\x1b[0m", 5);
+	(color) ? write(1, "\x1b[0m", 5) : 0;
 	write(1, "\n", 1);
+}
+
+static void		print_cap(int color)
+{
+	(color) ? write(1, "\x1b[32m", 6) : 0;
+	write(1, " ----------------", 18);
+	(color) ? write(1, "\x1b[31m", 6) : 0;
+	write(1, "    ----------------\n", 22);
+	(color) ? write(1, "\x1b[32m", 6) : 0;
+}
+
+static void		print_numbers(t_stack *a, t_stack *b, int color)
+{
+	char	*num;
+
+	num = (a) ? ft_itoa(a->num) : ft_strjoin("", "");
+	print_cap(color);
+	(color) ? write(1, "\x1b[32m", 6) : 0;
+	write(1, "|", 1);
+	print_symbols(" ", 5 + 10 - ft_strlen(num));
+	write(1, num, ft_strlen(num));
+	free(num);
+	write(1, " |  ", 5);
+	(color) ? write(1, "\x1b[0m", 5) : 0;
+	(color) ? write(1, "\x1b[31m", 6) : 0;
+	write(1, "|", 1);
+	num = (b) ? ft_itoa(b->num) : ft_strjoin("", "");
+	print_symbols(" ", 5 + 10 - ft_strlen(num));
+	write(1, num, ft_strlen(num));
+	write(1, " |", 2);
+	(color) ? write(1, "\x1b[0m", 5) : 0;
+	write(1, "\n", 1);
+	print_cap(color);
+	free(num);
 }
 
 void			visual_sort(t_container *stack_a, t_container *stack_b)
@@ -50,7 +84,10 @@ void			visual_sort(t_container *stack_a, t_container *stack_b)
 	b = stack_b->stack;
 	while (a || b)
 	{
-		print_string(a, b, stack_a->amount_of_nums);
+		if (stack_a->text)
+			print_numbers(a, b, stack_a->color);
+		else
+			print_string(a, b, stack_a->amount_of_nums, stack_a->color);
 		a = (a) ? a->next : NULL;
 		b = (b) ? b->next : NULL;
 	}

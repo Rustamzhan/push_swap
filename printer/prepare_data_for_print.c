@@ -79,15 +79,26 @@ void		prepare_ranks(t_container *a)
 
 int			fill_flags(t_container *a, t_container *b, char *arg)
 {
+	int	i;
+
+	i = (arg[1] >= '0' && arg[1] <= '9') ? 2 : 1;
 	b->stack = NULL;
 	b->height = 0;
-	if (!ft_strcmp("-v", arg) || !ft_strcmp("-vp", arg))
-	{
-		a->print = 1;
-		a->step = (arg[2] == 'p') ? 1 : 0;
-		return (1);
-	}
+	a->color = 0;
+	a->text = 0;
 	a->print = 0;
 	a->step = 0;
+	if (arg[0] == '-' && ft_strchr(arg, 'v'))
+	{
+		a->time = ft_atoi(&arg[1]);
+		a->time = (a->time) ? a->time : 1;
+		if (a->time > 9 || a->time < 0)
+			return (0);
+		a->text = (ft_strchr(arg, 't')) ? 1 : 0;
+		a->step = (ft_strchr(arg, 'p')) ? 1 : 0;
+		a->print = (ft_strchr(arg, 'v')) ? 1 : 0;
+		a->color = (ft_strchr(arg, 'c')) ? 1 : 0;
+		return (1);
+	}
 	return (0);
 }

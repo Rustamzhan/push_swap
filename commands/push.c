@@ -22,11 +22,14 @@ void	push_a(t_container *a, t_container *b)
 	if (!(a->stack))
 	{
 		a->stack = b->stack;
+		(a->stack->next) ? a->stack->next->prev = NULL : 0;
 		a->stack->next = NULL;
+		a->stack->prev = NULL;
 		a->height = 1;
 	}
 	else
 	{
+		(b->stack->next) ? b->stack->next->prev = NULL : 0;
 		b->stack->next = a->stack;
 		a->stack->prev = b->stack;
 		a->stack = b->stack;
@@ -46,11 +49,14 @@ void	push_b(t_container *a, t_container *b)
 	if (!(b->stack))
 	{
 		b->stack = a->stack;
+		(b->stack->next) ? b->stack->next->prev = NULL : 0;
 		b->stack->next = NULL;
+		b->stack->prev = NULL;
 		b->height = 1;
 	}
 	else
 	{
+		(a->stack->next) ? a->stack->next->prev = NULL : 0;
 		a->stack->next = b->stack;
 		b->stack->prev = a->stack;
 		b->stack = a->stack;

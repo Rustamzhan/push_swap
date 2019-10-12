@@ -73,12 +73,12 @@ static void	sort_and_vizual(t_container *a, t_container *b, char *line)
 	if (a->print)
 	{
 		(!a->step) ? write(1, "\033c", 3) : write(1, "\n\n\n\n", 4);
-		write(1, "\x1b[34m", 6);
+		(a->color) ? write(1, "\x1b[34m", 6) : 0;
 		write(1, line, ft_strlen(line));
-		write(1, "\x1b[0m", 5);
+		(a->color) ? write(1, "\x1b[0m", 5) : 0;
 		write(1, "\n", 1);
 		visual_sort(a, b);
-		sleep(1);
+		usleep(a->time * 100000);
 	}
 	free(line);
 }
@@ -89,8 +89,7 @@ int			main(int ac, char **av)
 	t_container	*b;
 	char		*line;
 
-	if (ac == 1 || (ac == 2 && (!ft_strcmp("-v", av[1]) ||
-		!ft_strcmp("-vp", av[1]))))
+	if (ac == 1)
 		return (0);
 	if (!((b = (t_container*)malloc(sizeof(t_container))) &&
 		(a = (t_container*)malloc(sizeof(t_container)))))

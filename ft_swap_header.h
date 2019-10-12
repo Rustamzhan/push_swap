@@ -27,10 +27,13 @@ typedef struct			s_stack
 typedef struct			s_container
 {
 	t_stack				*stack;
+	int					time;
 	int					amount_of_nums;
 	int					height;
 	int					step;
 	int					print;
+	int					color;
+	int					text;
 }						t_container;
 
 typedef struct			s_commands
