@@ -69,8 +69,10 @@ void		print_rotates(t_container *a)
 
 	min = find_min(a->stack);
 	stack = a->stack;
-	i = 1;
-	while (stack->num != min)
+	if (a->stack->num == min)
+		return ;
+	i = 0;
+	while (stack && stack->num != min)
 	{
 		i++;
 		stack = stack->next;

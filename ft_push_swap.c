@@ -32,20 +32,20 @@ static void			print_commands(t_container *a, t_container *b,
 {
 	while (table.rr--)
 	{
-		write(1, table.str_both, ft_strlen(table.str_both));
-		(ft_strcmp("rr\n", table.str_both)) ? rotate_stacks(&(a->stack),
+		write(1, table.r_str_both, ft_strlen(table.r_str_both));
+		(ft_strcmp("rrr\n", table.r_str_both)) ? rotate_stacks(&(a->stack),
 			&(b->stack)) : reverse_rotate_stacks(&(a->stack), &(b->stack));
 	}
 	while (table.ra--)
 	{
-		write(1, table.str_a, ft_strlen(table.str_a));
-		(ft_strcmp("ra\n", table.str_a)) ? rotate_stacks(&(a->stack), NULL) :
+		write(1, table.r_str_a, ft_strlen(table.r_str_a));
+		(ft_strcmp("rra\n", table.r_str_a)) ? rotate_stacks(&(a->stack), NULL) :
 			reverse_rotate_stacks(&(a->stack), NULL);
 	}
 	while (table.rb--)
 	{
-		write(1, table.str_b, ft_strlen(table.str_b));
-		(ft_strcmp("rb\n", table.str_b)) ? rotate_stacks(NULL, &(b->stack)) :
+		write(1, table.r_str_b, ft_strlen(table.r_str_b));
+		(ft_strcmp("rrb\n", table.r_str_b)) ? rotate_stacks(NULL, &(b->stack)) :
 			reverse_rotate_stacks(NULL, &(b->stack));
 	}
 }
@@ -102,18 +102,20 @@ int					main(int ac, char **av)
 	t_container	*a;
 	t_container	*b;
 
-	if (!(b = (t_container*)malloc(sizeof(t_container))) ||
-		!(a = (t_container*)malloc(sizeof(t_container))))
+	if (ac == 1)
+		return (0);
+	if (!((b = (t_container*)malloc(sizeof(t_container))) &&
+		(a = (t_container*)malloc(sizeof(t_container)))))
 		exit(1);
 	b->height = 0;
 	b->stack = NULL;
-	prepare_stack(a, ac, av);
-	if (is_sorted_stack(a, b) == 2)
+	a->print = 0;
+	if (!prepare_stack(a, ac, av) || is_sorted_stack(a, b) == 2)
 	{
 		ft_free_stacks(a, b);
-		return (0);
+		exit(0);
 	}
-	else
+	else if (!is_sorted_stack(a, b))
 		search_solve(a, b);
 	print_rotates(a);
 	ft_free_stacks(a, b);

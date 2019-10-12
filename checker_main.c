@@ -14,13 +14,13 @@
 
 static void	check_stacks(t_stack **stack_a, t_stack **stack_b)
 {
-	if (*stack_b != NULL)
+	if (stack_b && *stack_b != NULL)
 	{
 		write(1, "KO\n", 3);
 		return ;
 	}
 	*stack_b = *stack_a;
-	while ((*stack_b)->next)
+	while (*stack_b && (*stack_b)->next)
 	{
 		if ((*stack_b)->num > (*stack_b)->next->num)
 		{
@@ -57,85 +57,64 @@ static int	sort_stack(t_container *a, t_container *b, char *line)
 	else if (!ft_strcmp(line, "pb"))
 		push_b(a, b);
 	else
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
-static void	vizual_sort(t_container *stack_a, t_container *stack_b)
+static char	*operation(t_container *a)
 {
-	char	*str;
-	char	*num1;
-	char	*num2;
-	t_stack *a;
-	t_stack *b;
+	int	i;
 
-	a = stack_a->stack;
-	b = stack_b->stack;
-	while (a || b)
-	{
-		num1 = (a) ? ft_strjoin(ft_itoa(a->num), ft_strjoin("|", ft_itoa(stack_a->height))) : ft_strjoin("", "");
-		num2 = (b) ? ft_strjoin(ft_itoa(b->num), ft_strjoin("|", ft_itoa(stack_b->height))) : ft_strjoin("", "");
-		str = ft_strjoin(num1, ft_strjoin(ft_strjoin("	", num2), "\n"));
-		write(1, str, ft_strlen(str));
-		
-		free(num1);
-		free(num2);
-		free(str);
-		a = (a) ? a->next : NULL;
-		b = (b) ? b->next : NULL;
-	}
-	write(1, "\n\n", 2);
-	//sleep(3);
-	//write(1, "\033c", 3);
+	i = a->oper_score - a->step_point;
+	while (--i)
+		a->operatons = a->operatons->next;
+	return ((char *)a->operatons->content);
 }
 
-// void	mlx_visual_try(t_stack *stack_a, t_stack *stack_b)
-// {
-// 	void	*mlx_ptr;
-// 	void	*win_ptr;
-
-// 	((mlx_ptr = mlx_init())) ? 0 : exit(1);
-// 	((win_ptr = mlx_new_window(mlx_ptr, 1300, 1300, "AmazinG"))) ? 0 :
-// 								exit(1);
-// 	if (stack_a && stack_b)
-// 		;
-// 	mlx_loop(mlx_ptr);
-// }
-
-static void	sort_and_vizual(t_container *a, t_container *b, char *line,
-							char *arg)
+static void	sort_and_vizual(t_container *a, t_container *b, char *line)
 {
-	if (sort_stack(a, b, line))
+	char	*oper;
+
+	if (!sort_stack(a, b, line))
 	{
 		write(1, "Error\n", 6);
 		ft_free_stacks(a, b);
 		free(line);
 		exit(1);
 	}
+	(!a->step) ? write(1, "\033c", 3) : write(1, "\n\n\n\n", 4);
+	write(1, "\x1b[34m", 6);
+	write(1, line, ft_strlen(line));
+	write(1, "\x1b[0m", 5);
+	write(1, "\n", 1);
+	(a->print) ? visual_sort(a, b) : 0;
+	sleep(1);
 	free(line);
-	(!ft_strcmp("-v", arg)) ? write(1, line, ft_strlen(line)) : 0;
-	(!ft_strcmp("-v", arg)) ? write(1, "\n", 1) : 0;
-	(!ft_strcmp("-v", arg)) ? vizual_sort(a, b) : 0;
 }
 
 int			main(int ac, char **av)
 {
 	t_container	*a;
 	t_container	*b;
-	char	*line;
+	char		*line;
 
-	if (ac == 1 || (ac == 2 && ft_strcmp("-v", av[1]) == 0))
+	if (ac == 1 || (ac == 2 && av[1][0] == '-' && av[1][1] == 'v'))
+	{
+		write(1, "Usage: ./checker ([-v]) [list_of_numbers]\n", 51);
 		return (0);
-	if (!(b = (t_container*)malloc(sizeof(t_container))) ||
-		!(a = (t_container*)malloc(sizeof(t_container))))
+	}
+	if (!((b = (t_container*)malloc(sizeof(t_container))) &&
+		(a = (t_container*)malloc(sizeof(t_container)))))
 		exit(1);
-	b->height = 0;
-	b->stack = NULL;
-	prepare_stack(a, ac, av);
-	if (a->stack == NULL)
-		return (0);
+	fill_flags(a, b, av[1]);
+	if (!prepare_stack(a, ac, av))
+	{
+		ft_free_stacks(a, b);
+		exit(0);
+	}
+	prepare_ranks(a, av[1]);
 	while (get_next_line(0, &line) > 0)
-		sort_and_vizual(a, b, line, av[1]);
+		sort_and_vizual(a, b, line);
 	free(line);
 	check_stacks(&(a->stack), &(b->stack));
 	ft_free_stacks(a, b);

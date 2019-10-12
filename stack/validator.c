@@ -12,7 +12,7 @@
 
 #include "ft_swap_header.h"
 
-int		ft_isnumber(char *str)
+int			ft_isnumber(char *str)
 {
 	int	i;
 
@@ -21,15 +21,16 @@ int		ft_isnumber(char *str)
 		return (0);
 	while (str[i] != '\0')
 	{
-		if ((!ft_isdigit(str[i]) && str[i] != '-' && str[i] != '+') ||
+		if ((i > 0 && (str[i] == '-' || str[i] == '+')) ||
+			(!ft_isdigit(str[i]) && str[i] != '-' && str[i] != '+' && i != 0) ||
 			((str[i] == '-' || str[i] == '+') && !ft_isdigit(str[i + 1])))
 			return (0);
-		str++;
+		i++;
 	}
 	return (1);
 }
 
-int		ft_isint(char *str)
+int			ft_isint(char *str)
 {
 	int	len;
 	int	i;
@@ -52,7 +53,7 @@ int		ft_isint(char *str)
 	return (1);
 }
 
-int		ft_check_duplicates(int *result)
+int			ft_check_duplicates(int *result)
 {
 	int	i;
 	int	j;
@@ -70,22 +71,36 @@ int		ft_check_duplicates(int *result)
 	return (1);
 }
 
-void	ft_free_stacks(t_container *a, t_container *b)
+static void	free_stack(t_container *stack)
 {
-	t_stack *tmp;
+	t_stack	*tmp;
 
-	while (a->stack)
+	while (stack->height--)
 	{
-		tmp = a->stack->next;
-		free(a->stack);
-		a->stack = tmp;
+		tmp = stack->stack->next;
+		free(stack->stack);
+		stack->stack = NULL;
+		stack->stack = tmp;
 	}
-	while (b->stack)
+}
+
+void		ft_free_stacks(t_container *a, t_container *b)
+{
+	t_list	*tmp;
+
+	if (a->step)
 	{
-		tmp = b->stack->next;
-		free(b->stack);
-		b->stack = tmp;
+		while (a->operatons)
+		{
+			tmp = a->operatons->next;
+			free(a->operatons->content);
+			free(a->operatons);
+			a->operatons = NULL;
+			a->operatons = tmp;
+		}
 	}
+	free_stack(a);
+	free_stack(b);
 	free(a);
 	free(b);
 }

@@ -23,7 +23,7 @@ static void	swap_one_stack(t_stack **current)
 	(*current)->prev = tmp;
 	tmp->prev = NULL;
 	tmp->next = *current;
-	(*current)->next->prev = (*current);
+	tmp->next->prev = tmp;
 	*current = tmp;
 }
 

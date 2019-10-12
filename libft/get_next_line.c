@@ -108,6 +108,5 @@ int				get_next_line(const int fd, char **line)
 			return (save_line(line, buf, current));
 		*line = ft_strjoin_free(*line, buf);
 	}
-	current->content ? 0 : ft_free(head, &current);
 	return (ft_strlen(*line) ? 1 : 0);
 }
