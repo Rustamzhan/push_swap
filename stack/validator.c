@@ -86,19 +86,6 @@ static void	free_stack(t_container *stack)
 
 void		ft_free_stacks(t_container *a, t_container *b)
 {
-	t_list	*tmp;
-
-	if (a->step)
-	{
-		while (a->operatons)
-		{
-			tmp = a->operatons->next;
-			free(a->operatons->content);
-			free(a->operatons);
-			a->operatons = NULL;
-			a->operatons = tmp;
-		}
-	}
 	free_stack(a);
 	free_stack(b);
 	free(a);

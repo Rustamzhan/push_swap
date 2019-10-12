@@ -50,8 +50,6 @@ void			visual_sort(t_container *stack_a, t_container *stack_b)
 {
 	t_stack *a;
 	t_stack *b;
-	char	*num;
-	int		i;
 
 	a = stack_a->stack;
 	b = stack_b->stack;

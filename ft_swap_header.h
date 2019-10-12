@@ -64,7 +64,7 @@ int						check_position(t_stack *a);
 int						find_position(t_stack *stack, int num);
 int						prepare_stack(t_container *a, int ac, char **av);
 int						fill_flags(t_container *a, t_container *b, char *arg);
-void					prepare_ranks(t_container *a, char *arg);
+void					prepare_ranks(t_container *a);
 void					visual_sort(t_container *stack_a, t_container *stack_b);
 void					print_rotates(t_container *a);
 void					swap_stacks(t_stack **a, t_stack **b);

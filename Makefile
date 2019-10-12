@@ -36,28 +36,25 @@ HDR = ./libft/includes/
 
 FLAG = -Wall -Wextra -Werror
 
-MINILIB = -L ./minilibx/ -lmlx -framework OpenGL -framework AppKit
-
-
 all: lib $(NAME_1) $(NAME_2)
 
 lib:
 	make -C libft
 
 $(NAME_1): $(OBJ_1) $(OBJ) ./libft/libft.a
-	gcc -o $(NAME_1) $(OBJ) $(OBJ_1) -L ./libft -lft -L ./minilibx/ -lmlx -framework OpenGL -framework AppKit
+	gcc -o $(NAME_1) $(OBJ) $(OBJ_1) -L ./libft -lft
 
 $(OBJ): %.o: %.c ./ft_swap_header.h
-	gcc -g  -c -I $(HDR) -I . $< -o $@
+	gcc $(FLAG) -c -I $(HDR) -I . $< -o $@
 
 $(OBJ_1): %.o: %.c ./ft_swap_header.h
-	gcc -g  -c -I $(HDR) -I . $< -o $@
+	gcc $(FLAG) -c -I $(HDR) -I . $< -o $@
 
 $(NAME_2): $(OBJ_2) $(OBJ_1) ./libft/libft.a
 	gcc -o $(NAME_2) $(OBJ_1) $(OBJ_2) -L ./libft -lft
 	
 $(OBJ_2): %.o: %.c ./ft_swap_header.h
-	gcc -g $(FLAG) -c -I $(HDR) -I . $< -o $@
+	gcc $(FLAG) -c -I $(HDR) -I . $< -o $@
 
 clean:
 	make -C libft clean

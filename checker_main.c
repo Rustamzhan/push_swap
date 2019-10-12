@@ -61,20 +61,8 @@ static int	sort_stack(t_container *a, t_container *b, char *line)
 	return (1);
 }
 
-static char	*operation(t_container *a)
-{
-	int	i;
-
-	i = a->oper_score - a->step_point;
-	while (--i)
-		a->operatons = a->operatons->next;
-	return ((char *)a->operatons->content);
-}
-
 static void	sort_and_vizual(t_container *a, t_container *b, char *line)
 {
-	char	*oper;
-
 	if (!sort_stack(a, b, line))
 	{
 		write(1, "Error\n", 6);
@@ -112,7 +100,7 @@ int			main(int ac, char **av)
 		ft_free_stacks(a, b);
 		exit(0);
 	}
-	prepare_ranks(a, av[1]);
+	(a->print) ? prepare_ranks(a) : 0;
 	while (get_next_line(0, &line) > 0)
 		sort_and_vizual(a, b, line);
 	free(line);

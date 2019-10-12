@@ -48,7 +48,7 @@ static void	sort_array(int *nums, int len)
 	}
 }
 
-void		prepare_ranks(t_container *a, char *arg)
+void		prepare_ranks(t_container *a)
 {
 	int		*nums;
 	int		len;
