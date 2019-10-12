@@ -22,7 +22,7 @@ int			ft_isnumber(char *str)
 	while (str[i] != '\0')
 	{
 		if ((i > 0 && (str[i] == '-' || str[i] == '+')) ||
-			(!ft_isdigit(str[i]) && str[i] != '-' && str[i] != '+' && i != 0) ||
+			(!ft_isdigit(str[i]) && str[i] != '-' && str[i] != '+') ||
 			((str[i] == '-' || str[i] == '+') && !ft_isdigit(str[i + 1])))
 			return (0);
 		i++;

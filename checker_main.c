@@ -70,13 +70,16 @@ static void	sort_and_vizual(t_container *a, t_container *b, char *line)
 		free(line);
 		exit(1);
 	}
-	(!a->step) ? write(1, "\033c", 3) : write(1, "\n\n\n\n", 4);
-	write(1, "\x1b[34m", 6);
-	write(1, line, ft_strlen(line));
-	write(1, "\x1b[0m", 5);
-	write(1, "\n", 1);
-	(a->print) ? visual_sort(a, b) : 0;
-	sleep(1);
+	if (a->print)
+	{
+		(!a->step) ? write(1, "\033c", 3) : write(1, "\n\n\n\n", 4);
+		write(1, "\x1b[34m", 6);
+		write(1, line, ft_strlen(line));
+		write(1, "\x1b[0m", 5);
+		write(1, "\n", 1);
+		visual_sort(a, b);
+		sleep(1);
+	}
 	free(line);
 }
 
@@ -86,11 +89,9 @@ int			main(int ac, char **av)
 	t_container	*b;
 	char		*line;
 
-	if (ac == 1 || (ac == 2 && av[1][0] == '-' && av[1][1] == 'v'))
-	{
-		write(1, "Usage: ./checker ([-v]) [list_of_numbers]\n", 51);
+	if (ac == 1 || (ac == 2 && (!ft_strcmp("-v", av[1]) ||
+		!ft_strcmp("-vp", av[1]))))
 		return (0);
-	}
 	if (!((b = (t_container*)malloc(sizeof(t_container))) &&
 		(a = (t_container*)malloc(sizeof(t_container)))))
 		exit(1);
