@@ -19,11 +19,11 @@ static void	swap_one_stack(t_stack **current)
 	if ((*current)->next == NULL)
 		return ;
 	tmp = (*current)->next;
+	tmp->next->prev = (*current);
 	(*current)->next = tmp->next;
 	(*current)->prev = tmp;
 	tmp->prev = NULL;
 	tmp->next = *current;
-	tmp->next->prev = tmp;
 	*current = tmp;
 }
 

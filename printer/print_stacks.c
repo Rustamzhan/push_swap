@@ -23,10 +23,8 @@ static void		print_symbols(char *str, int len)
 
 static void		print_string(t_stack *a, t_stack *b, int height)
 {
-	char	*num;
 	int		i;
 
-	num = (a) ? ft_itoa(a->num) : ft_strjoin("", "");
 	i = (a) ? a->rank : 0;
 	write(1, "\x1b[32m", 6);
 	print_symbols(" ", 5 + height - i);
@@ -38,12 +36,9 @@ static void		print_string(t_stack *a, t_stack *b, int height)
 	write(1, "\x1b[31m", 6);
 	print_symbols(" ", 5 + height - i);
 	print_symbols("_", i);
-	free(num);
-	num = (b) ? ft_itoa(b->num) : ft_strjoin(" ", "");
 	print_symbols("_", i);
 	write(1, "\x1b[0m", 5);
 	write(1, "\n", 1);
-	free(num);
 }
 
 void			visual_sort(t_container *stack_a, t_container *stack_b)
