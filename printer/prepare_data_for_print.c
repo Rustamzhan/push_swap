@@ -62,9 +62,8 @@ void		prepare_ranks(t_container *a)
 	len = 0;
 	while (tmp)
 	{
-		nums[len] = tmp->num;
+		nums[len++] = tmp->num;
 		tmp = tmp->next;
-		len++;
 	}
 	sort_array(nums, len);
 	tmp = a->stack;
@@ -75,6 +74,7 @@ void		prepare_ranks(t_container *a)
 			tmp->rank = (nums[i] == tmp->num) ? i + 1 : tmp->rank;
 		tmp = tmp->next;
 	}
+	free(nums);
 }
 
 int			fill_flags(t_container *a, t_container *b, char *arg)

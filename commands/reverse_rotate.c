@@ -26,6 +26,7 @@ static void	reverse_rotate_one_stack(t_stack **current)
 	last->next = *current;
 	last->prev = NULL;
 	*current = last;
+	(*current)->marker = 1;
 }
 
 void		reverse_rotate_stacks(t_stack **a, t_stack **b)

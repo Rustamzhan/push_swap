@@ -18,7 +18,9 @@ static void	swap_one_stack(t_stack **current)
 
 	if ((*current)->next == NULL)
 		return ;
+	(*current)->marker = 1;
 	tmp = (*current)->next;
+	tmp->marker = 1;
 	(*current)->next = tmp->next;
 	(*current)->prev = tmp;
 	(tmp->next) ? tmp->next->prev = (*current) : 0;

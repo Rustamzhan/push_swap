@@ -12,11 +12,13 @@
 
 #include "ft_swap_header.h"
 
-static void	check_stacks(t_stack **stack_a, t_stack **stack_b)
+static void	check_stacks(t_stack **stack_a, t_stack **stack_b, int color)
 {
 	if (stack_b && *stack_b != NULL)
 	{
+		(color) ? write(1, "\x1b[31m", 6) : 0;
 		write(1, "KO\n", 3);
+		(color) ? write(1, "\x1b[0m", 5) : 0;
 		return ;
 	}
 	*stack_b = *stack_a;
@@ -24,12 +26,16 @@ static void	check_stacks(t_stack **stack_a, t_stack **stack_b)
 	{
 		if ((*stack_b)->num > (*stack_b)->next->num)
 		{
+			(color) ? write(1, "\x1b[31m", 6) : 0;
 			write(1, "KO\n", 3);
+			(color) ? write(1, "\x1b[0m", 5) : 0;
 			return ;
 		}
 		(*stack_b) = (*stack_b)->next;
 	}
+	(color) ? write(1, "\x1b[32m", 6) : 0;
 	write(1, "OK\n", 3);
+	(color) ? write(1, "\x1b[0m", 5) : 0;
 }
 
 static int	sort_stack(t_container *a, t_container *b, char *line)
@@ -72,12 +78,13 @@ static void	sort_and_vizual(t_container *a, t_container *b, char *line)
 	}
 	if (a->print)
 	{
-		(!a->step) ? write(1, "\033c", 3) : write(1, "\n\n\n\n", 4);
+		(!a->step) ? write(1, "\e[2J", 4) : write(1, "\n\n\n\n", 4);
 		(a->color) ? write(1, "\x1b[34m", 6) : 0;
 		write(1, line, ft_strlen(line));
 		(a->color) ? write(1, "\x1b[0m", 5) : 0;
 		write(1, "\n", 1);
 		visual_sort(a, b);
+		(a->color) ? write(1, "\x1b[0m", 5) : 0;
 		usleep(a->time * 100000);
 	}
 	free(line);
@@ -90,7 +97,7 @@ int			main(int ac, char **av)
 	char		*line;
 
 	if (ac == 1)
-		return (0);
+		exit(0);
 	if (!((b = (t_container*)malloc(sizeof(t_container))) &&
 		(a = (t_container*)malloc(sizeof(t_container)))))
 		exit(1);
@@ -104,7 +111,7 @@ int			main(int ac, char **av)
 	while (get_next_line(0, &line) > 0)
 		sort_and_vizual(a, b, line);
 	free(line);
-	check_stacks(&(a->stack), &(b->stack));
+	check_stacks(&(a->stack), &(b->stack), a->color);
 	ft_free_stacks(a, b);
-	return (0);
+	exit(0);
 }

@@ -103,7 +103,7 @@ int					main(int ac, char **av)
 	t_container	*b;
 
 	if (ac == 1)
-		return (0);
+		exit(0);
 	if (!((b = (t_container*)malloc(sizeof(t_container))) &&
 		(a = (t_container*)malloc(sizeof(t_container)))))
 		exit(1);
@@ -119,5 +119,5 @@ int					main(int ac, char **av)
 		search_solve(a, b);
 	print_rotates(a);
 	ft_free_stacks(a, b);
-	return (0);
+	exit(0);
 }

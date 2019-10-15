@@ -23,6 +23,7 @@ static void	create_stack(t_stack *stack, int *numbers)
 		if (!(tmp = (t_stack *)malloc(sizeof(t_stack))))
 			exit(1);
 		tmp->num = numbers[i];
+		tmp->marker = 0;
 		tmp->next = NULL;
 		tmp->prev = stack;
 		stack->next = tmp;
@@ -48,6 +49,7 @@ int			prepare_stack(t_container *a, int ac, char **av)
 	head->num = numbers[1];
 	head->next = NULL;
 	head->prev = NULL;
+	head->marker = 0;
 	a->stack = head;
 	create_stack(head, numbers);
 	free(numbers);

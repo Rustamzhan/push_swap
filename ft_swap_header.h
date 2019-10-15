@@ -20,6 +20,7 @@ typedef struct			s_stack
 {
 	int					num;
 	int					rank;
+	int					marker;
 	struct s_stack		*prev;
 	struct s_stack		*next;
 }						t_stack;

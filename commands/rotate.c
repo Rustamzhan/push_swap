@@ -21,6 +21,7 @@ static void	rotate_one_stack(t_stack **current)
 		return ;
 	head = (*current)->next;
 	last = *current;
+	last->marker = 1;
 	while (last->next)
 		last = last->next;
 	last->next = *current;

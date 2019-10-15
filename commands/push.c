@@ -18,6 +18,7 @@ void	push_a(t_container *a, t_container *b)
 
 	if (b->stack == NULL)
 		return ;
+	b->stack->marker = 1;
 	tmp = b->stack->next;
 	if (!(a->stack))
 	{
@@ -45,6 +46,7 @@ void	push_b(t_container *a, t_container *b)
 
 	if (a->stack == NULL)
 		return ;
+	a->stack->marker = 1;
 	tmp = a->stack->next;
 	if (!(b->stack))
 	{
